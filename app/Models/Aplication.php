@@ -9,6 +9,7 @@ class Aplication extends Model
 {
     use HasFactory;
 
+    protected $table = 'aplications';
     protected $primaryKey = 'ApplicationId';
 
     protected $fillable = [

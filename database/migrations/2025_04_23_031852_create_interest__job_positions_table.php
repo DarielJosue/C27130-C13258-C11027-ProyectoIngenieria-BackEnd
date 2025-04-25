@@ -10,8 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('interest__job_positions', function (Blueprint $table) {
+        Schema::create('interest_job_positions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('InterestId')->constrained('interests', 'InterestId')->onDelete('cascade');
+            $table->foreignId('JobPositionId')->constrained('job_positions', 'JobPositionId')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -21,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('interest__job_positions');
+        Schema::dropIfExists('interest_job_positions');
     }
 };
