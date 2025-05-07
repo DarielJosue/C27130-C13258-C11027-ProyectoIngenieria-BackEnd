@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('interest_job_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('InterestId')->constrained('interests', 'InterestId')->onDelete('cascade'); // Relación con interests
-            $table->foreignId('JobTypeId')->constrained('job_types', 'JobTypeId')->onDelete('cascade'); // Relación con job_types
+            $table->foreignId('interest_id')->constrained('interests', 'interest_id')->onDelete('cascade'); // Relación con interests
+            $table->foreignId('job_type_id')->constrained('job_types', 'job_type_id')->onDelete('cascade'); // Relación con job_types
             $table->timestamps();
         });
     }

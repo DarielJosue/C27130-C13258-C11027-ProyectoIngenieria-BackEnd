@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('interest_location_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('InterestId')->constrained('interests', 'InterestId')->onDelete('cascade');
-            $table->foreignId('LocationTypeId')->constrained('location_types', 'LocationTypeId')->onDelete('cascade');
+            $table->foreignId('interest_id')->constrained('interests', 'interest_id')->onDelete('cascade');
+            $table->foreignId('location_type_id')->constrained('location_types', 'location_type_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

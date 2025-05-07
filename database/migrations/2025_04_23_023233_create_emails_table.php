@@ -11,9 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('emails', function (Blueprint $table) {
-            $table->id('EmailId');
-            $table->string('Email');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade');
+            $table->id('email_id');
+            $table->string('email');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

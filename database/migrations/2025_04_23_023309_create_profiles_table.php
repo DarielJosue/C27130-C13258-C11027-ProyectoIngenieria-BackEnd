@@ -11,11 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->id('ProfileId');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade'); // Relación con users
-            $table->text('Biography')->nullable();
-            $table->string('Phone')->nullable();
-            $table->string('Address')->nullable();
+            $table->id('profile_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade'); // Relación con users
+            $table->text('biography')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

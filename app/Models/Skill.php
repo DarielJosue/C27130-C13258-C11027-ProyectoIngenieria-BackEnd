@@ -9,14 +9,14 @@ class Skill extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'SkillId';
+    protected $primaryKey = 'skill_id'; 
 
     protected $fillable = [
-        'Skill',
+        'skill',
     ];
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'Skill_User', 'SkillId', 'UserId');
+        return $this->belongsToMany(User::class, 'skill_user', 'skill_id', 'user_id'); 
     }
 }

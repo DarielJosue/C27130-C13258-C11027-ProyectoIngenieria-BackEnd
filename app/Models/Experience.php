@@ -9,21 +9,21 @@ class Experience extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'ExperienceId';
+    protected $primaryKey = 'experience_id';
 
     protected $fillable = [
-        'UserId',
-        'EmploymentType',
-        'Company',
-        'StartDate',
-        'EndDate',
-        'Location',
-        'LocationType',
-        'Description',
+        'user_id',
+        'employment_type',
+        'company',
+        'start_date',
+        'end_date',
+        'location',
+        'location_type',
+        'description',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'UserId');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

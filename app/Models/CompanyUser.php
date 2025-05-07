@@ -9,20 +9,20 @@ class CompanyUser extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'CompanyUserId';
+    protected $primaryKey = 'company_user_id';
 
     protected $fillable = [
-        'CompanyId',
-        'Name',
-        'Email',
-        'Password',
-        'Role',
-        'Active',
-        'RegisterDate',
+        'company_id',
+        'name',
+        'email',
+        'password',
+        'role',
+        'active',
+        'register_date',
     ];
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'CompanyId');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

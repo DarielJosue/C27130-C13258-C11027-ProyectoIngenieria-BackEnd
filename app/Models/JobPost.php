@@ -9,20 +9,20 @@ class JobPost extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'JobPostId';
+    protected $primaryKey = 'job_post_id';
 
     protected $fillable = [
-        'CompanyId',
-        'Title',
-        'Description',
-        'Requirements',
-        'PublishDate',
-        'Salary',
-        'Location',
+        'company_id',
+        'title',
+        'description',
+        'requirements',
+        'publish_date',
+        'salary',
+        'location',
     ];
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'CompanyId');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

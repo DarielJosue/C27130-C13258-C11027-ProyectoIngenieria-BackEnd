@@ -5,28 +5,22 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::create('aplications', function (Blueprint $table) {
-            $table->id('AplicationId');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade');
-            $table->foreignId('JobPostId')->constrained('job_posts', 'JobPostId')->onDelete('cascade');
-            $table->foreignId('CvId')->constrained('curricula', 'CvId')->onDelete('cascade');
-            $table->date('AplicationDate');
-            $table->text('Message')->nullable();
-            $table->string('Status')->default('Pending');
+        Schema::create('applications', function (Blueprint $table) {
+            $table->id('application_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->foreignId('job_post_id')->constrained('job_posts', 'job_post_id');
+            $table->foreignId('cv_id')->constrained('curriculum', 'cv_id');
+            $table->timestamp('application_date');
+            $table->text('message')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('aplications');
+        Schema::dropIfExists('applications');
     }
 };

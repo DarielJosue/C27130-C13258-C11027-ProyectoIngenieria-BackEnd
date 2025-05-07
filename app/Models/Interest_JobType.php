@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Interest_JobType extends Model
 {
     use HasFactory;
-    protected $table = 'Interest_JobTypes';
+
+    protected $table = 'interest_job_types';
     public $timestamps = false;
 
     protected $fillable = [
-        'InterestId',
-        'JobTypeId'
+        'interest_id',
+        'job_type_id',
     ];
 }

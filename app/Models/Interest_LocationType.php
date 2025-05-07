@@ -8,16 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Interest_LocationType extends Model
 {
     use HasFactory;
-    protected $table = 'Interest_LocationTypes';
+
+    protected $table = 'interest_location_types';
     public $timestamps = false;
 
     protected $fillable = [
-        'InterestId',
-        'LocationTypeId'
+        'interest_id',
+        'location_type_id',
     ];
 
     public function interest()
     {
-        return $this->belongsTo(Interest::class, 'InterestId');
+        return $this->belongsTo(Interest::class, 'interest_id');
     }
 }

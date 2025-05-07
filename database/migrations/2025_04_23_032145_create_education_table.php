@@ -11,15 +11,15 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('education', function (Blueprint $table) {
-            $table->id('EducationId');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade');
-            $table->string('Institution');
-            $table->string('Degree');
-            $table->string('Discipline');
-            $table->date('StartDate');
-            $table->date('EndDate')->nullable();
-            $table->text('Activities')->nullable();
-            $table->text('Description')->nullable();
+            $table->id('education_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->string('institution');
+            $table->string('degree');
+            $table->string('discipline');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->text('activities')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

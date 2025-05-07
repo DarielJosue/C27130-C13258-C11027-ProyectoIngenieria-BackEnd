@@ -10,18 +10,18 @@ class Curriculum extends Model
     use HasFactory;
 
     protected $table = 'curricula';
-    protected $primaryKey = 'CvId';
+    protected $primaryKey = 'cv_id';
 
     protected $fillable = [
-        'UserId',
-        'FilePath',
-        'UploadDate',
-        'Description',
-        'IsDefault',
+        'user_id',
+        'file_path',
+        'upload_date',
+        'description',
+        'is_default',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'UserId');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

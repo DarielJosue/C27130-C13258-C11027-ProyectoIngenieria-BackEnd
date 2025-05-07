@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobPosition extends Model
 {
-    protected $primaryKey = 'PositionId';
+    protected $primaryKey = 'position_id';
 
     protected $fillable = [
-        'PositionName'
+        'position_name'
     ];
 
     public function interests()
     {
-        return $this->belongsToMany(Interest::class, 'Interest_JobPosition', 'JobPositionId', 'InterestId');
+        return $this->belongsToMany(Interest::class, 'interest_job_position', 'job_position_id', 'interest_id');
     }
 }

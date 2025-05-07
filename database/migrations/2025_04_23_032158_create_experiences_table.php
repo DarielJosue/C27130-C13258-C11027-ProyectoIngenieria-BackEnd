@@ -11,15 +11,15 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('experiences', function (Blueprint $table) {
-            $table->id('ExperienceId');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade');
-            $table->string('EmploymentType');
-            $table->string('Company');
-            $table->date('StartDate');
-            $table->date('EndDate')->nullable();
-            $table->string('Location');
-            $table->string('LocationType');
-            $table->text('Description')->nullable();
+            $table->id('experience_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->string('employment_type');
+            $table->string('company');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('location');
+            $table->string('location_type');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

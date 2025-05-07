@@ -10,13 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('curricula', function (Blueprint $table) {
-            $table->id('CvId');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade');
-            $table->string('FilePath');
-            $table->timestamp('UploadDate')->useCurrent();
-            $table->text('Description')->nullable();
-            $table->boolean('IsDefault')->default(false);
+        Schema::create('curriculum', function (Blueprint $table) {
+            $table->id('cv_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->string('file_path');
+            $table->timestamp('upload_date')->useCurrent();
+            $table->text('description')->nullable();
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('curricula');
+        Schema::dropIfExists('curriculum');
     }
 };

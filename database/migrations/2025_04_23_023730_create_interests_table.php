@@ -11,10 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('interests', function (Blueprint $table) {
-            $table->id('InterestId');
-            $table->foreignId('UserId')->constrained('users', 'UserId')->onDelete('cascade');
-            $table->enum('Visibility', ['public', 'company_only']);
-            $table->timestamp('StartDate')->nullable();
+            $table->id('interest_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->enum('visibility', ['public', 'company_only']);
+            $table->timestamp('start_date')->nullable();
             $table->timestamps();
         });
     }

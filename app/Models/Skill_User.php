@@ -9,20 +9,20 @@ class Skill_User extends Model
 {
     use HasFactory;
 
-    protected $table = 'Skill_User';
+    protected $table = 'skill_user';
 
     protected $fillable = [
-        'SkillId',
-        'UserId',
+        'skill_id',
+        'user_id',
     ];
 
     public function skill()
     {
-        return $this->belongsTo(Skill::class, 'SkillId');
+        return $this->belongsTo(Skill::class, 'skill_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'UserId');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

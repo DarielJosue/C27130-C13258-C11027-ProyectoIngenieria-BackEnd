@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Interest_JobPosition extends Model
 {
-    protected $table = 'Interest_Positions';
+    protected $table = 'interest_positions';
     public $timestamps = false;
 
     protected $fillable = [
-        'InterestId',
-        'PositionId'
+        'interest_id',
+        'position_id',
     ];
 }

@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('location_types', function (Blueprint $table) {
-            $table->id('LocationTypeId');
-            $table->string('LocationTypeName');
+            $table->id('location_type_id');
+            $table->string('location_type_name');
             $table->timestamps();
         });
     }

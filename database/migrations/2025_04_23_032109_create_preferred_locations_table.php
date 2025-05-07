@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('preferred_locations', function (Blueprint $table) {
-            $table->id('PreferredLocationId');
-            $table->string('LocationName');
+            $table->id('preferred_location_id');
+            $table->string('location_name');
             $table->timestamps();
         });
     }
