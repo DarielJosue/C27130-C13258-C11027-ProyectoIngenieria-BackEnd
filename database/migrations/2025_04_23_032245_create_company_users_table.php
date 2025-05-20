@@ -10,8 +10,10 @@ class CreateCompanyUsersTable extends Migration
     {
         Schema::create('company_users', function (Blueprint $table) {
             $table->id('company_user_id');
-            $table->foreignId('company_id')->constrained('companies', 'company_id');
+            $table->foreignId('company_id')->nullable()->constrained('companies', 'company_id')->onDelete('set null');
             $table->string('name');
+            $table->string('username')->unique();
+            $table->string('lastname');
             $table->string('email');
             $table->string('password');
             $table->string('role');
