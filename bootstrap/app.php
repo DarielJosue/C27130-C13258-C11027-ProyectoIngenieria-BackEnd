@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
+use Laravel\Sanctum\Http\Middleware\CheckAbilities;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,11 +16,18 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Adjunta throttle:api al grupo "api"
+        $middleware->alias([
+            'ability' => CheckForAnyAbility::class,
+            'abilities' => CheckAbilities::class,
+        ]);
+
+        $middleware->api(prepend: [
+            SubstituteBindings::class,
+        ]);
+
         $middleware->api(append: [
             \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
         ]);
-        // Nota: SubstituteBindings ya viene por defecto
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

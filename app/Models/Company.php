@@ -24,11 +24,11 @@ class Company extends Model
 
     public function jobPosts()
     {
-        return $this->hasMany(JobPost::class, 'company_id');
+        return $this->hasMany(JobPost::class, 'company_id', 'company_id');
     }
 
     public function companyUsers()
     {
-        return $this->hasMany(CompanyUser::class, 'company_id');
+        return $this->hasMany(CompanyUser::class, 'company_id', 'company_id');
     }
 }

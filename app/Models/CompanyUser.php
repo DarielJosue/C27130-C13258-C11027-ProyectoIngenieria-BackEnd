@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authennticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class CompanyUser extends Authennticatable
+class CompanyUser extends Authenticatable
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $primaryKey = 'company_user_id';
 
@@ -29,6 +29,6 @@ class CompanyUser extends Authennticatable
     ];
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
 }

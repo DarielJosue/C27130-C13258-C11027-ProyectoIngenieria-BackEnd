@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Conversation;
 use App\Models\Message;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    // Enviar un mensaje
+
     public function sendMessage(Request $request)
     {
         $request->validate([
@@ -20,6 +19,9 @@ class ChatController extends Controller
         ]);
 
         $senderId = Auth::id();
+        if (!$senderId) {
+            return response()->json(['error' => 'Usuario no autenticado'], 401);
+        }
         $recipientId = $request->input('recipient_id');
 
 

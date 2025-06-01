@@ -15,7 +15,7 @@ class Application extends Model
     protected $fillable = [
         'user_id',
         'job_post_id',
-        'curriculum_id',
+        'cv_id',
         'application_date',
         'message',
         'status',
@@ -23,16 +23,16 @@ class Application extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function jobPost()
     {
-        return $this->belongsTo(JobPost::class, 'job_post_id');
+        return $this->belongsTo(JobPost::class, 'job_post_id', 'job_post_id');
     }
 
     public function curriculum()
     {
-        return $this->belongsTo(Curriculum::class, 'curriculum_id');
+        return $this->belongsTo(Curriculum::class, 'cv_id', 'cv_id');
     }
 }

@@ -1,7 +1,4 @@
 <?php
-
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ChatController;
@@ -9,32 +6,56 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\JobPostController;
 use App\Http\Controllers\Api\ApplicationController;
+use App\Http\Controllers\Api\CurriculumController;
+use App\Http\Controllers\Api\ProfileController;
 
-Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('register-company-user', [AuthController::class, 'registerCompanyUser']);
+Route::post('login', [AuthController::class, 'login']);
+Route::get('me', [AuthController::class, 'userData'])->middleware('auth:sanctum');
 
-Route::apiResource('job-posts', JobPostController::class)->except(['createJobPost', 'update', 'delete']); 
 
-Route::middleware(['auth:sanctum', 'abilities:auth_token'])->group(function () {
-    Route::post('create-post', [JobPostController::class, 'createJobPost']);
-    Route::put('job-posts/{job_post}', [JobPostController::class, 'update']);
-    Route::delete('job-posts/{job_post}', [JobPostController::class, 'delete']);
-    Route::get('company-job-posts', [JobPostController::class, 'companyJobPosts']);
+Route::prefix('company')
+    ->middleware(['auth:sanctum', 'ability:jobpost:create'])
+    ->group(function () {
+        Route::post('create-post', [JobPostController::class, 'createJobPost']);
+        Route::put('update-job-posts/{job_post}', [JobPostController::class, 'update']);
+        Route::delete('delete-job-posts/{job_post}', [JobPostController::class, 'delete']);
+        Route::get('company-job-posts', [JobPostController::class, 'companyJobPosts']);
+        Route::get('applications/by-company', [ApplicationController::class, 'getApplicationsByUser']);
+    });
+Route::get('job-posts', [JobPostController::class, 'index'])
+    ->middleware('auth:sanctum');
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('job-posts/apply', [ApplicationController::class, 'createApplication']);
+    Route::get('job-posts/by-company/{id}', [JobPostController::class, 'getJobPostById']);
+    Route::post('/job-posts/{id}/save', [JobPostController::class, 'save']);
 });
 
+Route::prefix('curriculum')
+    ->middleware('auth:sanctum')->group(function () {
+        Route::get('getCurriculum', [CurriculumController::class, 'getCurriculum']);
+        Route::post('upload', [CurriculumController::class, 'saveCurriculum']);
+        Route::put('update', [CurriculumController::class, 'updateCurriculum']);
+        Route::delete('delete', [CurriculumController::class, 'deleteCurriculum']);
 
-Route::middleware(['auth:sanctum', 'abilities:auth_token'])->group(function () { 
-    Route::post('job-posts/{job_post}/apply', [ApplicationController::class, 'createApplication']);
-    Route::get('applications', [ApplicationController::class, 'getApplicationsByUser']);
+    });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/job-posts/{job_post}/applications', [ApplicationController::class, 'applcationsByJobPost']);
+    Route::put('/applications/{application_id}/status', [ApplicationController::class, 'updateStatus']);
+    Route::get('/applications/by-company/{companyId}', [ApplicationController::class, 'getCompanyApplications']);
 });
 
-
-Route::middleware(['auth:sanctum', 'abilities:company-token'])->group(function () { 
-    Route::get('job-posts/{job_post}/applications', [ApplicationController::class, 'applcationsByJobPost']);
-    Route::put('applications/{application}/status', [ApplicationController::class, 'updateStatusForApplcation']);
-});
+Route::prefix('profile')
+    ->middleware('auth:sanctum')->group(function () {
+        Route::get('/', [ProfileController::class, 'index']);
+        Route::post('/create', [ProfileController::class, 'create']);
+        Route::post('/upload-profile-picture', [ProfileController::class, 'uploadProfilePicture']);
+        Route::put('/update-profile-picture', [ProfileController::class, 'updateProfilePicture']);
+    });
 
 Route::middleware('auth:sanctum')->post('register-company', [CompanyController::class, 'registerCompany']);
 Route::get('user', [UserController::class, 'index']);

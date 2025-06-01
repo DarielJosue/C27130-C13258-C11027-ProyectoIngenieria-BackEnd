@@ -9,7 +9,7 @@ class Curriculum extends Model
 {
     use HasFactory;
 
-    protected $table = 'curricula';
+    protected $table = 'curriculum';
     protected $primaryKey = 'cv_id';
 
     protected $fillable = [

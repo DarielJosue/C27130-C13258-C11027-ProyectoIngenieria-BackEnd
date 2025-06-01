@@ -23,6 +23,14 @@ class JobPost extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsTo(Company::class, 'company_id', 'company_id');
+    }
+    public function jobPosts()
+    {
+        return $this->belongsTo(JobPost::class, 'company_id', 'company_id');
+    }
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'job_post_id', 'job_post_id');
     }
 }

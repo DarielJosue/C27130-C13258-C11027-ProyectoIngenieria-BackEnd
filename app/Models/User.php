@@ -52,19 +52,24 @@ class User extends Authenticatable
 
     public function emails()
     {
-        return $this->hasMany(Email::class, 'user_id');
+        return $this->hasMany(Email::class, 'user_id', 'user_id');
     }
 
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'user_id');
+        return $this->hasOne(Profile::class, 'user_id', 'user_id');
     }
     public function applications()
     {
-        return $this->hasMany(Application::class, 'user_id');
+        return $this->hasMany(Application::class, 'user_id', 'user_id');
     }
-    public function  curriculums()
+    public function curriculum()
     {
-        return $this->hasMany(Curriculum::class, 'user_id');
+        return $this->hasMany(Curriculum::class, 'user_id', 'user_id');
     }
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class, 'user_id', 'user_id');
+    }
+    
 }

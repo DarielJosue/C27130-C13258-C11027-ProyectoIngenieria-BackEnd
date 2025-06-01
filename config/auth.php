@@ -40,14 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'api_user' => [ 
-            'driver' => 'sanctum',
-            'provider' => 'users',
-        ],
-        'api_company_user' => [ 
-            'driver' => 'sanctum',
-            'provider' => 'company_users_provider', 
-        ],
     ],
 
     /*
@@ -76,12 +68,12 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_COMPANY_MODEL', App\Models\CompanyUser::class),
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
+    // 'providers' => [
+    // 'users' => [
+    //     'driver' => 'database',
+    //     'table' => 'users',
+    // ],
 
     /*
     |--------------------------------------------------------------------------

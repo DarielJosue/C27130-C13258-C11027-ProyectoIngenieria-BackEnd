@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description');
             $table->text('requirements');
-            $table->date('publication_date');
+            $table->date('publish_date');
             $table->decimal('salary', 10, 2)->nullable();
             $table->string('location')->nullable();
             $table->timestamps();
