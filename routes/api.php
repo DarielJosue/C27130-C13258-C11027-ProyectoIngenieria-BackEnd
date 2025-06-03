@@ -17,13 +17,15 @@ Route::get('me', [AuthController::class, 'userData'])->middleware('auth:sanctum'
 
 
 Route::prefix('company')
-    ->middleware(['auth:sanctum', 'ability:jobpost:create'])
+    ->middleware(['auth:sanctum', 'ability:jobpost:create,company:create,company:view'])
     ->group(function () {
         Route::post('create-post', [JobPostController::class, 'createJobPost']);
         Route::put('update-job-posts/{job_post}', [JobPostController::class, 'update']);
         Route::delete('delete-job-posts/{job_post}', [JobPostController::class, 'delete']);
         Route::get('company-job-posts', [JobPostController::class, 'companyJobPosts']);
         Route::get('applications/by-company', [ApplicationController::class, 'getApplicationsByUser']);
+        Route::post('registerCompany', [CompanyController::class, 'registerCompany']);
+Route::middleware('auth:sanctum')->get('company/by-user', [CompanyController::class, 'getCompanyByUser']);
     });
 Route::get('job-posts', [JobPostController::class, 'index'])
     ->middleware('auth:sanctum');
@@ -57,7 +59,7 @@ Route::prefix('profile')
         Route::put('/update-profile-picture', [ProfileController::class, 'updateProfilePicture']);
     });
 
-Route::middleware('auth:sanctum')->post('register-company', [CompanyController::class, 'registerCompany']);
+
 Route::get('user', [UserController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/messages/send', [ChatController::class, 'sendMessage']);
 Route::middleware('auth:sanctum')->get('/messages/{recipientId}', [ChatController::class, 'getMessages']);

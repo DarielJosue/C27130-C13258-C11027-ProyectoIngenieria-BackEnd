@@ -43,10 +43,13 @@ class AuthController extends Controller
             }
 
             $abilities = $userType === 'company' ?
-                ['jobpost:create', 'jobpost:view', 'jobpost:update', 'jobpost:delete'] :
+                ['jobpost:create', 'jobpost:view', 'jobpost:update', 'jobpost:delete', 'company:create', 'company:view'] :
                 ['user:actions'];
 
             $token = $user->createToken('auth_token', $abilities)->plainTextToken;
+            //recuperar el id de la compañia de la bd si es un usuario de tipo company
+            // $companyId = CompanyUser::where('user_id', $user->id)->value('company_id');
+
 
 
             if ($userType === 'company') {
@@ -56,7 +59,7 @@ class AuthController extends Controller
                     'token' => $token,
                     'user_type' => $userType,
                     'token_type' => 'Bearer',
-                    'company_id' => $user->company_id,
+                    'company_id' => $user->company_id,//$companyId ? $companyId : null,
                     'abilities' => $abilities,
                 ]);
             } else {
@@ -70,11 +73,19 @@ class AuthController extends Controller
                 ]);
             }
         } catch (ValidationException $e) {
+            \Log::error('Error de validación en el inicio de sesión: ' . $e->getMessage(), [
+                'input' => $request->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return response()->json([
                 'message' => 'Error en la validación',
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
+            \Log::error('Error al iniciar sesión: ' . $e->getMessage(), [
+                'input' => $request->all(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return response()->json([
                 'message' => 'Error al iniciar sesión',
                 'error' => $e->getMessage()

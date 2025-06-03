@@ -39,5 +39,16 @@ class CompanyUserSeeder extends Seeder
             'active' => true,
             'register_date' => Carbon::now(),
         ]);
+        CompanyUser::create([
+            'company_id' => null,
+            'name' => 'Luis',
+            'lastname' => 'Fernández',
+            'username' => 'luis.fernandez',
+            'email' => 'luis.fer@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'admin',
+            'active' => true,
+            'register_date' => Carbon::now(),
+        ]);
     }
 }
