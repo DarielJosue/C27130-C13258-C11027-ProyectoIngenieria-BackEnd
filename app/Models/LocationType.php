@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LocationType extends Model
 {
+    use HasFactory;
     protected $table = 'location_types';
     protected $primaryKey = 'location_type_id';
 

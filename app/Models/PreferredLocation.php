@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class PreferredLocation extends Model
 {
+    use HasFactory;
     protected $table = 'preferred_locations';
     protected $primaryKey = 'preferred_location_id';
 

@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\CompanyUser;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
     /**
@@ -73,7 +73,7 @@ class AuthController extends Controller
                 ]);
             }
         } catch (ValidationException $e) {
-            \Log::error('Error de validación en el inicio de sesión: ' . $e->getMessage(), [
+            Log::error('Error de validación en el inicio de sesión: ' . $e->getMessage(), [
                 'input' => $request->all(),
                 'trace' => $e->getTraceAsString(),
             ]);
@@ -82,7 +82,7 @@ class AuthController extends Controller
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            \Log::error('Error al iniciar sesión: ' . $e->getMessage(), [
+            Log::error('Error al iniciar sesión: ' . $e->getMessage(), [
                 'input' => $request->all(),
                 'trace' => $e->getTraceAsString(),
             ]);

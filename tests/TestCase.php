@@ -8,15 +8,13 @@ use App\Models\JobType;
 use App\Models\LocationType;
 use App\Models\PreferredLocation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\Concerns\CreatesApplication;
-
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase;
-    public function setUp(): void
-    {
+    use RefreshDatabase;
 
+    protected function setUp(): void
+    {
         parent::setUp();
 
         JobPosition::factory()->count(5)->create();

@@ -22,7 +22,7 @@ class InterestTest extends TestCase
     protected $locationTypes;
     protected $preferredLocations;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

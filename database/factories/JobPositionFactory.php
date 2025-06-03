@@ -19,7 +19,7 @@ class JobPositionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->jobTitle,
+            'position_name' => $this->faker->jobTitle,
         ];
     }
 }
