@@ -33,6 +33,50 @@ class CurriculumController extends Controller
             ], 500);
         }
     }
+    // Para obtener datos del currículum por id de usuario
+    public function getCurriculumByUser($user_id)
+    {
+        try {
+            $user = \App\Models\User::find($user_id);
+
+            if (!$user) {
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+
+            $curriculum = $user->curriculum;
+
+            if (!$curriculum) {
+                return response()->json(['message' => 'Currículum no encontrado'], 404);
+            }
+
+            return response()->json($curriculum);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al obtener el currículum.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function showCVByUser($user_id)
+    {
+        $user = \App\Models\User::find($user_id);
+
+        if (!$user || !$user->curriculum) {
+            abort(404);
+        }
+
+        $file = storage_path('app/public/' . $user->curriculum->file_path);
+
+        if (!file_exists($file)) {
+            abort(404);
+        }
+
+        return response()->file($file, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($file) . '"'
+        ]);
+    }
+
     public function saveCurriculum(Request $request)
     {
         try {

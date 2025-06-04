@@ -46,6 +46,13 @@ Route::prefix('curriculum')
         Route::delete('delete', [CurriculumController::class, 'deleteCurriculum']);
 
     });
+Route::middleware('auth:sanctum')->get(
+    '/curriculum/by-user/{user_id}',
+    [CurriculumController::class, 'getCurriculumByUser']
+);
+
+Route::get('/cv-files/by-user/{user_id}', [CurriculumController::class, 'showCVByUser']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/job-posts/{job_post}/applications', [ApplicationController::class, 'applcationsByJobPost']);
     Route::put('/applications/{application_id}/status', [ApplicationController::class, 'updateStatus']);

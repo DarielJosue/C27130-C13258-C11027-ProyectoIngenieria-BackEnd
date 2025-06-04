@@ -53,12 +53,17 @@ class ApplicationController extends Controller
             ], 500);
         }
     }
+    // ApplicationController.php
     public function getApplicationsByUser(Request $request)
     {
         try {
             $user = $request->user(); // el usuario autenticado
 
-            $applications = \App\Models\Application::with(['user', 'curriculum', 'jobPost'])
+            $applications = Application::with([
+                'user',
+                'curriculum',
+                'jobPost.company' 
+            ])
                 ->where('user_id', $user->user_id)
                 ->latest()
                 ->get();
