@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\JobPost;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Application;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {

@@ -64,3 +64,5 @@ Route::get('user', [UserController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/messages/send', [ChatController::class, 'sendMessage']);
 Route::middleware('auth:sanctum')->get('/messages/{recipientId}', [ChatController::class, 'getMessages']);
 Route::get('/test', fn() => response()->json(['message' => 'API funciona']));
+
+
