@@ -23,17 +23,18 @@ Route::prefix('company')
         Route::put('update-job-posts/{job_post}', [JobPostController::class, 'update']);
         Route::delete('delete-job-posts/{job_post}', [JobPostController::class, 'delete']);
         Route::get('company-job-posts', [JobPostController::class, 'companyJobPosts']);
-        Route::get('applications/by-company', [ApplicationController::class, 'getApplicationsByUser']);
         Route::post('registerCompany', [CompanyController::class, 'registerCompany']);
-Route::middleware('auth:sanctum')->get('company/by-user', [CompanyController::class, 'getCompanyByUser']);
+        Route::middleware('auth:sanctum')->get('company/by-user', [CompanyController::class, 'getCompanyByUser']);
     });
 Route::get('job-posts', [JobPostController::class, 'index'])
     ->middleware('auth:sanctum');
-
+Route::get('applications/by-user', [ApplicationController::class, 'getApplicationsByUser'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('job-posts/apply', [ApplicationController::class, 'createApplication']);
+    Route::get('job-posts/by-user', [JobPostController::class, 'getJobPostsByUser']);
     Route::get('job-posts/by-company/{id}', [JobPostController::class, 'getJobPostById']);
+    Route::get('job-posts/by-companyId/{companyId}', [JobPostController::class, 'getJobPostByCompanyId']);
     Route::post('/job-posts/{id}/save', [JobPostController::class, 'save']);
 });
 
@@ -64,5 +65,3 @@ Route::get('user', [UserController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/messages/send', [ChatController::class, 'sendMessage']);
 Route::middleware('auth:sanctum')->get('/messages/{recipientId}', [ChatController::class, 'getMessages']);
 Route::get('/test', fn() => response()->json(['message' => 'API funciona']));
-
-

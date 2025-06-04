@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JobPost;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Application;
 
 
 class JobPostController extends Controller
@@ -159,16 +160,21 @@ class JobPostController extends Controller
         return response()->json(['message' => 'Publicación de trabajo eliminada con éxito']);
     }
 
-    public function companyJobPosts()
+    public function getJobPostByCompanyId($companyId)
     {
-        $companyUser = Auth::guard('api_company_users')->user();
-        if (!$companyUser) {
-            return response()->json(['message' => 'No autorizado.'], 403);
+        try {
+            $jobPosts = JobPost::where('company_id', $companyId)
+                ->with('company')
+                ->orderBy('publish_date', 'desc')
+                ->paginate(15);
+
+            return response()->json($jobPosts);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener las publicaciones de trabajo por ID de empresa', ['error' => $e->getMessage()]);
+            return response()->json([
+                'message' => 'Error al obtener las publicaciones de trabajo.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-        $jobPosts = JobPost::where('company_id', $companyUser->company_id)
-            ->with('company')
-            ->orderBy('publish_date', 'desc')
-            ->paginate(15);
-        return response()->json($jobPosts);
     }
 }

@@ -56,24 +56,25 @@ class ApplicationController extends Controller
     public function getApplicationsByUser(Request $request)
     {
         try {
-            $companyUser = $request->user();
+            $user = $request->user(); // el usuario autenticado
 
-            $applications = Application::with(['user', 'curriculum', 'jobPost'])
-                ->whereHas('jobPost', function ($query) use ($companyUser) {
-                    $query->where('company_user_id', $companyUser->id);
-                })
+            $applications = \App\Models\Application::with(['user', 'curriculum', 'jobPost'])
+                ->where('user_id', $user->user_id)
                 ->latest()
                 ->get();
 
             return response()->json($applications);
         } catch (\Exception $e) {
-            \Log::error('Error al obtener las aplicaciones del usuario', ['error' => $e->getMessage()]);
+            \Log::error('Error al obtener las postulaciones del usuario', [
+                'error' => $e->getMessage()
+            ]);
             return response()->json([
-                'message' => 'Error al obtener las aplicaciones.',
+                'message' => 'Error al obtener las postulaciones.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
+
 
     public function getCompanyApplications($companyId)
     {
