@@ -17,7 +17,7 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,192.168.1.72:8000,::1',// agregué 192.168.1.72:8000 para pruebas con el celular
+        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,192.168.1.72:8000,::1,https://c27130-c13258-c11027-proyecto-ingenieria-back-hlg0p52mr.vercel.app',// agregué 192.168.1.72:8000 para pruebas con el celular
         Sanctum::currentApplicationUrlWithPort(),
         // Sanctum::currentRequestHost(),
     ))),
