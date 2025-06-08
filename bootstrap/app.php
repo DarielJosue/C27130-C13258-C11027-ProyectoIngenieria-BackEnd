@@ -11,7 +11,7 @@ return Application::configure()
     ->withRouting(
         web: base_path('routes/web.php'),
         api: base_path('routes/api.php'),
-        apiPrefix: 'api',
+        apiPrefix: '',
         commands: base_path('routes/console.php'),
         health: '/up',
     )

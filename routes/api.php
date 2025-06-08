@@ -37,6 +37,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('job-posts/by-companyId/{companyId}', [JobPostController::class, 'getJobPostByCompanyId']);
     Route::post('/job-posts/{id}/save', [JobPostController::class, 'save']);
 });
+//______________ruta para prueba en vercel_______________________
+Route::post('/debug-body', function (\Illuminate\Http\Request $request) {
+    return [
+        'all' => $request->all(),
+        'raw' => $request->getContent(),
+        'headers' => $request->headers->all(),
+    ];
+});
 
 Route::prefix('curriculum')
     ->middleware('auth:sanctum')->group(function () {
