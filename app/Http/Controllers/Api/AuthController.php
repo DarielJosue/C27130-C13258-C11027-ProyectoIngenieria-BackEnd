@@ -16,6 +16,9 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        Log::info('REQUEST ALL', ['all' => $request->all()]);
+        Log::info('RAW CONTENT', ['raw' => $request->getContent()]);
+
         try {
             $credentials = $request->only('loginInput', 'password');
 
