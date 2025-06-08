@@ -5,6 +5,7 @@ $target = '/tmp/database.sqlite';
 
 if (file_exists($source) && !file_exists($target)) {
     copy($source, $target);
+    chmod($target, 0666);
 }
 if (!file_exists('/tmp/cache')) {
     mkdir('/tmp/cache', 0777, true);
