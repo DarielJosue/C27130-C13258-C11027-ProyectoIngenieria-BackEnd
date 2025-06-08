@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\URL;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,7 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        }
         RateLimiter::for('api', function (Request $request) {
             // 60 peticiones por minuto, por usuario o IP
             return Limit::perMinute(60)
