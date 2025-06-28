@@ -8,6 +8,7 @@ use App\Models\JobPost;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Application;
 use Illuminate\Support\Facades\Log;
+use App\Services\FirebaseService;
 
 class ApplicationController extends Controller
 {
@@ -62,7 +63,7 @@ class ApplicationController extends Controller
             $applications = Application::with([
                 'user',
                 'curriculum',
-                'jobPost.company' 
+                'jobPost.company'
             ])
                 ->where('user_id', $user->user_id)
                 ->latest()
@@ -179,6 +180,14 @@ class ApplicationController extends Controller
                 'application_id' => $application_id,
                 'new_status' => $application->status
             ]);
+
+
+            \Log::info('Enviando notificación de aceptación', [
+                'user_id' => $application->user_id,
+                'application_id' => $application->application_id
+            ]);
+            $notificationController = new NotificationController();
+            $notificationController->notifyApplicationChange($application);
 
             return response()->json([
                 'message' => 'Estado actualizado con éxito',

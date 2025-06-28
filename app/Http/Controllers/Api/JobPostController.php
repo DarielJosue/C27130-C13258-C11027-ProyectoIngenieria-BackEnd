@@ -13,29 +13,37 @@ class JobPostController extends Controller
 {
     public function index(Request $request)
     {
-        $paginatedPosts = JobPost::with('company')
-            ->orderBy('publish_date', 'desc')
-            ->paginate(15);
+        try {
+            $paginatedPosts = JobPost::with('company')
+                ->orderBy('publish_date', 'desc')
+                ->paginate(15);
 
 
 
-        $mappedPosts = $paginatedPosts->getCollection()->transform(function ($post) {
-            return [
-                'id' => $post->job_post_id,
-                'title' => $post->title,
-                'description' => $post->description,
-                'requirements' => $post->requirements,
-                'salary' => $post->salary,
-                'location' => $post->location,
-                'company_name' => $post->company->company_name ?? 'Empresa no disponible',
-                'created_at' => $post->publish_date,
-            ];
-        });
+            $mappedPosts = $paginatedPosts->getCollection()->transform(function ($post) {
+                return [
+                    'id' => $post->job_post_id,
+                    'title' => $post->title,
+                    'description' => $post->description,
+                    'requirements' => $post->requirements,
+                    'salary' => $post->salary,
+                    'location' => $post->location,
+                    'company_name' => $post->company->company_name ?? 'Empresa no disponible',
+                    'created_at' => $post->publish_date,
+                ];
+            });
 
 
 
-        $paginatedPosts->setCollection($mappedPosts);
-        return response()->json($paginatedPosts);
+            $paginatedPosts->setCollection($mappedPosts);
+            return response()->json($paginatedPosts);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener las publicaciones de trabajo', ['error' => $e->getMessage()]);
+            return response()->json([
+                'message' => 'Error al obtener las publicaciones de trabajo.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
     public function getJobPostById($id)
     {

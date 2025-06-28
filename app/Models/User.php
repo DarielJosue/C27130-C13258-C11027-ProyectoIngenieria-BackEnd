@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'user_id'; 
+    protected $primaryKey = 'user_id';
 
     public $timestamps = false;
 
@@ -26,6 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function deviceTokens()
+    {
+        return $this->hasMany(DeviceToken::class, 'user_id', 'user_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id', 'user_id');
+    }
 
     /**
      * para los mensajes y conversaciones
@@ -71,5 +81,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(JobPost::class, 'user_id', 'user_id');
     }
-    
+
 }

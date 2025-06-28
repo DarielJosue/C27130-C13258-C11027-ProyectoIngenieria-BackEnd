@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\JobPostController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\CurriculumController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\NotificationController;
 
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('register', [AuthController::class, 'register']);
@@ -79,4 +80,16 @@ Route::prefix('profile')
 Route::get('user', [UserController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/messages/send', [ChatController::class, 'sendMessage']);
 Route::middleware('auth:sanctum')->get('/messages/{recipientId}', [ChatController::class, 'getMessages']);
-Route::get('/test', fn() => response()->json(['message' => 'API funciona']));
+Route::get('/test', fn() => response()->json(['message' => 'API funciona']));// routes/api.php
+
+
+Route::middleware('auth:sanctum')->post('/device-tokens', [NotificationController::class, 'storeDeviceToken']);// routes/api.php
+Route::middleware('auth:sanctum')->get('/notificaciones', [NotificationController::class, 'getUserNotifications']);
+
+
+
+
+
+
+
+Route::post('test-push', [NotificationController::class, 'testPushNotification']);
