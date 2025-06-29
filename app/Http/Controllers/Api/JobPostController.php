@@ -14,28 +14,23 @@ class JobPostController extends Controller
     public function index(Request $request)
     {
         try {
-            $paginatedPosts = JobPost::with('company')
-                ->orderBy('publish_date', 'desc')
-                ->paginate(15);
+            $query = JobPost::with('company');
 
 
+            if ($request->has('search') && !empty($request->search)) {
+                $searchTerm = $request->search;
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('title', 'like', '%' . $searchTerm . '%')
+                        ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                        ->orWhere('requirements', 'like', '%' . $searchTerm . '%')
+                        ->orWhere('location', 'like', '%' . $searchTerm . '%')
+                        ->orWhereHas('company', function ($q) use ($searchTerm) {
+                            $q->where('company_name', 'like', '%' . $searchTerm . '%');
+                        });
+                });
+            }
 
-            $mappedPosts = $paginatedPosts->getCollection()->transform(function ($post) {
-                return [
-                    'id' => $post->job_post_id,
-                    'title' => $post->title,
-                    'description' => $post->description,
-                    'requirements' => $post->requirements,
-                    'salary' => $post->salary,
-                    'location' => $post->location,
-                    'company_name' => $post->company->company_name ?? 'Empresa no disponible',
-                    'created_at' => $post->publish_date,
-                ];
-            });
-
-
-
-            $paginatedPosts->setCollection($mappedPosts);
+            $paginatedPosts = $query->orderBy('publish_date', 'desc')->paginate(15);
             return response()->json($paginatedPosts);
         } catch (\Exception $e) {
             \Log::error('Error al obtener las publicaciones de trabajo', ['error' => $e->getMessage()]);
