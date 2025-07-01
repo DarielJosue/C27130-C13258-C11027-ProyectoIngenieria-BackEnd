@@ -15,6 +15,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('register-company-user', [AuthController::class, 'registerCompanyUser']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('me', [AuthController::class, 'userData'])->middleware('auth:sanctum');
+Route::post('test-push-notification', [NotificationController::class, 'testPushNotification']);
 
 
 Route::prefix('company')
